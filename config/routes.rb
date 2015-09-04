@@ -1,8 +1,41 @@
 Rails.application.routes.draw do
+
+  resources :order_items
+
+  get '/create_order_items' => 'order_items#create', as: :create_order_items
+  get '/update_order_items/:id' => 'order_items#update', as: :update_order_items
+
+
+  resources :orders
+
+  get '/create_order' => 'orders#create', as: :create_order
+  get '/update_order/:id' => 'orders#update', as: :update_order
+
+
+  resources :tags
+
+  get '/create_tag' => 'tags#create', as: :create_tag
+  get '/update_tag/:id' => 'tags#update', as: :update_tag
+
+
+  resources :items
+
+  get '/create_item' => 'items#create', as: :create_item
+  get '/update_item/:id' => 'items#update', as: :update_item
+
+
+  resources :menus
+
+  get '/create_menu' => 'menus#create', as: :create_menu
+  get '/update_menu/:id' => 'menus#update', as: :update_menu
+
+
   resources :accounts
 
-  get '/create_account' => 'accounts#create_account', as: :create_account
+  get '/create_account' => 'accounts#create', as: :create
   get '/update_account/:id' => 'accounts#update', as: :update
+
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

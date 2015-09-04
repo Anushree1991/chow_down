@@ -8,11 +8,6 @@ class AccountsController < ApplicationController
     render :json => @accounts
   end
 
-  def create_account
-    account = Account.create(name: params[:name], description: params[:desc], welcome_msg: params[:msg])
-    render :json => account.details
-  end
-
   # GET /accounts/1
   # GET /accounts/1.json
   def show
@@ -30,14 +25,12 @@ class AccountsController < ApplicationController
   # POST /accounts
   # POST /accounts.json
   def create
-    @account = Account.new(account_params)
+    @account = Account.create(name: params[:name], description: params[:desc], welcome_msg: params[:msg])
 
     respond_to do |format|
       if @account.save
-        format.html { redirect_to @account, notice: 'Account was successfully created.' }
         format.json { render :show, status: :created, location: @account }
-      else
-        format.html { render :new }
+      else        
         format.json { render json: @account.errors, status: :unprocessable_entity }
       end
     end
@@ -50,8 +43,12 @@ class AccountsController < ApplicationController
     account.name = params[:name]
     account.description = params[:desc]
     account.welcome_msg = params[:msg]
-    account_details = account.save
-    render :json => account_details.details    
+    if account.save
+      account_details = Account.find_by_id(params[:id])
+      render :json => account_details
+    else
+      format.json { render json: @account.errors, status: :unprocessable_entity }
+    end
   end
 
   # DELETE /accounts/1

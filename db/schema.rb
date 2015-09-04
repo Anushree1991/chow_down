@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150902103208) do
+ActiveRecord::Schema.define(version: 20150904082850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,48 @@ ActiveRecord::Schema.define(version: 20150902103208) do
     t.string   "welcome_msg"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string   "name"
+    t.float    "price"
+    t.integer  "menu_id"
+    t.string   "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "menus", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "account_id"
+    t.string   "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.integer  "order_id"
+    t.integer  "item_id"
+    t.string   "quantity"
+    t.string   "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "account_id"
+    t.integer  "tag_id"
+    t.integer  "user_id"
+    t.string   "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
